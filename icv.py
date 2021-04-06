@@ -8,7 +8,8 @@ root_dir = "/app/"
 input_dir = root_dir + "input/"
 output_dir = root_dir + "output/"
 templates_dir = "./brain_templates/"
-test_dir = './test_data/dicom_test_data/'
+test_dir = "./test_data/"
+
 
 def convert_dicom_to_nifti(test=False):
     if test:
@@ -92,4 +93,20 @@ def output_icv_estimation(volume_ml):
     volume_file = output_dir + "icv_estimation.txt"
     f = open(volume_file, "w")
     f.write("Estimated Intracranial Volume: {} ml".format(volume_ml))
+    f.close()
+
+
+def calculate_dice_score(mask_file):
+    v = 1
+    dice_file = output_dir + "dice_score.txt"
+    ground_truth_mask_file = test_dir + "test_brain_mask.gz"
+    ground_truth_mask = np.array(nib.load(ground_truth_mask_file).get_fdata())
+    new_mask = np.array(nib.load(mask_file).get_fdata())
+    dice = (
+        np.sum(new_mask[ground_truth_mask == v])
+        * 2.0
+        / (np.sum(ground_truth_mask) + np.sum(new_mask))
+    )
+    f = open(dice_file, "w")
+    f.write("Dice Score against the test mask is {}".format(dice))
     f.close()

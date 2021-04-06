@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   icv_app:
-    image: omagdy/icv
+    image: omagdy/icv:latest
     tty: true
     volumes:
       - input:/app/input

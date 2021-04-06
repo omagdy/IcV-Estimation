@@ -28,3 +28,5 @@ RUN which antsBrainExtraction.sh
 
 WORKDIR /app/icv
 COPY . .
+
+RUN mkdir -p /app/output

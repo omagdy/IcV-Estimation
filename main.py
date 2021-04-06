@@ -6,6 +6,7 @@ from icv import (
     plot_mask_overlay,
     estimate_volume,
     output_icv_estimation,
+    calculate_dice_score,
 )
 
 
@@ -28,6 +29,8 @@ def main():
     icv = estimate_volume(mask_file, PIXEL_SPACING, SLICE_THICKNESS)
     output_icv_estimation(icv)
     plot_mask_overlay(mask_file, niftii_file)
+    if TEST:
+        calculate_dice_score(mask_file)
 
 
 if __name__ == "__main__":

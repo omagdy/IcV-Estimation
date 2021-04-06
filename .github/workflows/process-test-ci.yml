@@ -7,5 +7,24 @@ jobs:
     steps:
         - name: Checkout Repo
           uses: actions/checkout@v2
+        - name: Check Output Directory Before Process
+          run: ls /app/output
         - name: Run Entire Process
           run: python main.py --test True
+        - name: Check Output Directory After Process
+          run: ls /app/output
+        - name: Upload ICV File
+          uses: actions/upload-artifact@v2
+          with:
+            name: icv_estimation.txt
+            path: /app/output/icv_estimation.txt
+        - name: Upload ICV File
+          uses: actions/upload-artifact@v2
+          with:
+            name: mask_overlay.png
+            path: /app/output/mask_overlay.png
+        - name: Upload Brain Mask
+          uses: actions/upload-artifact@v2
+          with:
+            name: BrainExtractionMask.nii.gz
+            path: /app/output/BrainExtractionMask.nii.gz
