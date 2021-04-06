@@ -27,4 +27,3 @@ RUN which antsBrainExtraction.sh
 
 WORKDIR /app/ivc
 COPY . .
-CMD [ "python", "main.py" , "-h"]
