@@ -1,7 +1,6 @@
 import subprocess
 from arg_parser import input_parser
-from ivc import convert_dicom_to_nifti, extract_brain_segment,
- plot_mask_overlay, estimate_volume, output_ivc_estimation
+from ivc import convert_dicom_to_nifti, extract_brain_segment, plot_mask_overlay, estimate_volume, output_ivc_estimation
 
 
 def main():
