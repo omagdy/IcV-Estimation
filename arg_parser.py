@@ -26,7 +26,9 @@ def input_parser():
         action="store",
         default=False,
         type=bool,
-        help=("Whether to use test data or use data in the mounted input directory. Default: False"),
+        help=(
+            "Whether to use test data or use data in the mounted input directory. Default: False"
+        ),
     )
 
     return parser

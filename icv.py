@@ -11,10 +11,10 @@ templates_dir = "./brain_templates/"
 test_dir = './test_data/dicom_test_data/'
 
 def convert_dicom_to_nifti(test=False):
-	if test:
-		input_location = test_dir
-	else:
-		input_location = input_dir
+    if test:
+        input_location = test_dir
+    else:
+        input_location = input_dir
     nifti_dir = root_dir + "nifti_converted_output/"
     dcmn2niix_o_name = "outputfile"
     dcmn2niix_cmd = [
