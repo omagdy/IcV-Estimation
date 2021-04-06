@@ -19,15 +19,17 @@ def convert_dicom_to_nifti():
 
 
 def extract_brain_segment(niftii_file):
+	ants_o_name             = "output"
+	brain_extraction_output = root_dir + 'brain_extraction/' + ants_o_name
 	brain_template          = templates_dir + "T_template0.nii.gz"
 	probability_mask        = templates_dir + "T_template0_BrainCerebellumProbabilityMask.nii.gz"
 	registration_mask       = templates_dir + "T_template0_BrainCerebellumRegistrationMask.nii.gz"
-	ants_o_name             = "output"
-	brain_extraction_output = output_dir + ants_o_name
 	brain_extraction_cmd    = ["antsBrainExtraction.sh", "-d", "3", "-a", niftii_file, "-e", brain_template, 
 							"-m", probability_mask, "-f", registration_mask, "-o", brain_extraction_output]
 	subprocess.run(brain_extraction_cmd, check=True, text=True)
 	mask_file               = brain_extraction_output+'BrainExtractionMask.nii.gz'
+	cp_cmd                  = ["cp", mask_file, output_dir+'.']
+	subprocess.run(cp_cmd, check=True, text=True)
 	return mask_file
 
 
