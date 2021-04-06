@@ -20,5 +20,13 @@ def input_parser():
         type=float,
         help=("Thickness of each pixel in mm. Default: 1"),
     )
+    parser.add_argument(
+        "-t",
+        "--test",
+        action="store",
+        default=False,
+        type=bool,
+        help=("Whether to use test data or use data in the mounted input directory. Default: False"),
+    )
 
     return parser

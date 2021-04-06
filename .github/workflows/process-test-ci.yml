@@ -1,0 +1,11 @@
+name: CI Process Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: omagdy/icv:dev
+    steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v2
+        - name: Run Entire Process
+          run: python main.py --test True

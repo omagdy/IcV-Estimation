@@ -8,9 +8,13 @@ root_dir = "/app/"
 input_dir = root_dir + "input/"
 output_dir = root_dir + "output/"
 templates_dir = "./brain_templates/"
+test_dir = './test_data/dicom_test_data/'
 
-
-def convert_dicom_to_nifti():
+def convert_dicom_to_nifti(test=False):
+	if test:
+		input_location = test_dir
+	else:
+		input_location = input_dir
     nifti_dir = root_dir + "nifti_converted_output/"
     dcmn2niix_o_name = "outputfile"
     dcmn2niix_cmd = [
@@ -23,7 +27,7 @@ def convert_dicom_to_nifti():
         dcmn2niix_o_name,
         "-o",
         nifti_dir,
-        input_dir,
+        input_location,
     ]
     subprocess.run(dcmn2niix_cmd, check=True, text=True)
     niftii_file = nifti_dir + dcmn2niix_o_name + "_Eq_1.nii.gz"

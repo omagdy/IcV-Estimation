@@ -12,10 +12,11 @@ from icv import (
 def main():
 
     args = input_parser().parse_args()
+    TEST = args.test
     PIXEL_SPACING = args.pixel_spacing
     SLICE_THICKNESS = args.slice_thickness
     try:
-        niftii_file = convert_dicom_to_nifti()
+        niftii_file = convert_dicom_to_nifti(TEST)
     except subprocess.CalledProcessError:
         print("DICOM data is missing.")
         return
