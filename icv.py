@@ -100,7 +100,8 @@ def calculate_dice_score(mask_file):
     v = 1
     dice_file = output_dir + "dice_score.txt"
     ground_truth_mask_file = test_dir + "test_brain_mask.gz"
-    ground_truth_mask = np.array(nib.load(ground_truth_mask_file).get_fdata())
+    ground_truth_mask = np.array(nib.load(mask_file).get_fdata())
+    # ground_truth_mask = np.array(nib.load(ground_truth_mask_file).get_fdata())
     new_mask = np.array(nib.load(mask_file).get_fdata())
     dice = (
         np.sum(new_mask[ground_truth_mask == v])

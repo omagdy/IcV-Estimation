@@ -18,7 +18,7 @@ jobs:
           with:
             name: icv_estimation.txt
             path: /app/output/icv_estimation.txt
-        - name: Upload ICV File
+        - name: Upload Mask Overlay
           uses: actions/upload-artifact@v2
           with:
             name: mask_overlay.png
