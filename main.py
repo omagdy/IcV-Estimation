@@ -1,6 +1,6 @@
 import subprocess
 from arg_parser import input_parser
-from ivc import convert_dicom_to_nifti, extract_brain_segment, plot_mask_overlay, estimate_volume, output_ivc_estimation
+from icv import convert_dicom_to_nifti, extract_brain_segment, plot_mask_overlay, estimate_volume, output_icv_estimation
 
 
 def main():
@@ -18,8 +18,8 @@ def main():
 	except subprocess.CalledProcessError:
 		print("Brain templates are missing.")
 		return
-	ivc               = estimate_volume(mask_file, PIXEL_SPACING, SLICE_THICKNESS)
-	output_ivc_estimation(ivc)
+	icv               = estimate_volume(mask_file, PIXEL_SPACING, SLICE_THICKNESS)
+	output_icv_estimation(icv)
 	plot_mask_overlay(mask_file, niftii_file)
 
 

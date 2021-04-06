@@ -26,5 +26,5 @@ ENV ANTSPATH="/opt/ANTs/bin/"
 ENV PATH="${ANTSPATH}:$PATH"
 RUN which antsBrainExtraction.sh
 
-WORKDIR /app/ivc
+WORKDIR /app/icv
 COPY . .

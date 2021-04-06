@@ -1,7 +1,7 @@
 version: "3.9"
 services:
-  ivc_app:
-    image: ivc
+  icv_app:
+    image: icv
     tty: true
     volumes:
       - input:/app/input

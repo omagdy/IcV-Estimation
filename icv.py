@@ -49,7 +49,7 @@ def estimate_volume(mask_file, PIXEL_SPACING, SLICE_THICKNESS):
 	return volume_ml
 
 
-def output_ivc_estimation(volume_ml):
+def output_icv_estimation(volume_ml):
 	volume_file = output_dir + "icv_estimation.txt"
 	f = open(volume_file, "w")
 	f.write("Estimated Intracranial Volume: {} ml".format(volume_ml))

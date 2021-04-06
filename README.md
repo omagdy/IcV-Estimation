@@ -7,7 +7,7 @@ The following steps demonstrate how to use the program:
  1. ## Build the container 
 Use the following command to create the container:
 ```
-docker-compose up -d ivc_app
+docker-compose up -d icv_app
 ```
 2. ## Insert input data
 A folder containing CT scan files in the DICOM format should be inserted in the input volume which will be mounted by docker to the container from the following locations at the local driver :
@@ -23,7 +23,7 @@ For Linux:
  - ## Run the program
 Use the following command to get the output:
 ```
-docker-compose exec ivc_app bash -c "python main.py --pixel_spacing 0.5 --slice_thickness 1"
+docker-compose exec icv_app bash -c "python main.py --pixel_spacing 0.5 --slice_thickness 1"
 ```
 where pixel_spacing and slice_thickness are optional parameters that determine the voxel unit volume of the scan.
 
