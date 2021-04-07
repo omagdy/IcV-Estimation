@@ -28,5 +28,11 @@ RUN which antsBrainExtraction.sh
 
 WORKDIR /app/icv
 COPY . .
+export PYTHONPATH="$PYTHONPATH:/app/icv"
 
 RUN mkdir -p /app/output
+
+RUN apt-get install redis -y
+
+RUN nohup redis-server &
+RUN nohup celery -A f_app.celery worker --loglevel=info &

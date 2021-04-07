@@ -1,8 +1,10 @@
 version: "3.9"
 services:
   icv_app:
-    image: omagdy/icv:latest
+    image: omagdy/icv:dev
     tty: true
+    ports:
+      - "5000:5000"
     volumes:
       - input:/app/input
       - output:/app/output
