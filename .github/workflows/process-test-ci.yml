@@ -10,7 +10,7 @@ jobs:
         - name: Check Output Directory Before Process
           run: ls /app/output
         - name: Run Entire Process
-          run: python main.py --test True
+          run: python app/main.py --test True
         - name: Check Output Directory After Process
           run: ls /app/output
         - name: Upload ICV File
