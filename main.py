@@ -7,6 +7,7 @@ from icv import (
     estimate_volume,
     output_icv_estimation,
     calculate_dice_score,
+    clear_output_directories,
 )
 
 
@@ -16,15 +17,18 @@ def main():
     TEST = args.test
     PIXEL_SPACING = args.pixel_spacing
     SLICE_THICKNESS = args.slice_thickness
+    clear_output_directories()
     try:
         niftii_file = convert_dicom_to_nifti(TEST)
     except subprocess.CalledProcessError:
-        print("DICOM data is missing.")
+        print(
+            "Error during converting DICOM data to Nifti. Make sure input data is available."
+        )
         return
     try:
         mask_file = extract_brain_segment(niftii_file)
     except subprocess.CalledProcessError:
-        print("Brain templates are missing.")
+        print("Error during brain segmentation.")
         return
     icv = estimate_volume(mask_file, PIXEL_SPACING, SLICE_THICKNESS)
     output_icv_estimation(icv)

@@ -1,3 +1,5 @@
+import os
+import glob
 import subprocess
 import numpy as np
 import nibabel as nib
@@ -9,6 +11,8 @@ input_dir = root_dir + "input/"
 output_dir = root_dir + "output/"
 templates_dir = "./brain_templates/"
 test_dir = "./test_data/"
+nifti_o_dir = root_dir + "nifti_converted_output/"
+ants_o_dir = root_dir + "brain_extraction/"
 
 
 def convert_dicom_to_nifti(test=False):
@@ -16,7 +20,6 @@ def convert_dicom_to_nifti(test=False):
         input_location = test_dir
     else:
         input_location = input_dir
-    nifti_dir = root_dir + "nifti_converted_output/"
     dcmn2niix_o_name = "outputfile"
     dcmn2niix_cmd = [
         "dcm2niix",
@@ -27,17 +30,17 @@ def convert_dicom_to_nifti(test=False):
         "-f",
         dcmn2niix_o_name,
         "-o",
-        nifti_dir,
+        nifti_o_dir,
         input_location,
     ]
     subprocess.run(dcmn2niix_cmd, check=True, text=True)
-    niftii_file = nifti_dir + dcmn2niix_o_name + "_Eq_1.nii.gz"
+    niftii_file = nifti_o_dir + dcmn2niix_o_name + "_Eq_1.nii.gz"
     return niftii_file
 
 
 def extract_brain_segment(niftii_file):
     ants_o_name = "output"
-    brain_extraction_output = root_dir + "brain_extraction/" + ants_o_name
+    brain_extraction_output = ants_o_dir + ants_o_name
     brain_template = templates_dir + "T_template0.nii.gz"
     probability_mask = (
         templates_dir + "T_template0_BrainCerebellumProbabilityMask.nii.gz"
@@ -99,9 +102,8 @@ def output_icv_estimation(volume_ml):
 def calculate_dice_score(mask_file):
     v = 1
     dice_file = output_dir + "dice_score.txt"
-    ground_truth_mask_file = test_dir + "test_brain_mask.gz"
-    ground_truth_mask = np.array(nib.load(mask_file).get_fdata())
-    # ground_truth_mask = np.array(nib.load(ground_truth_mask_file).get_fdata())
+    ground_truth_mask_file = test_dir + "test_brain_mask.nii.gz"
+    ground_truth_mask = np.array(nib.load(ground_truth_mask_file).get_fdata())
     new_mask = np.array(nib.load(mask_file).get_fdata())
     dice = (
         np.sum(new_mask[ground_truth_mask == v])
@@ -111,3 +113,11 @@ def calculate_dice_score(mask_file):
     f = open(dice_file, "w")
     f.write("Dice Score against the test mask is {}".format(dice))
     f.close()
+
+
+def clear_output_directories():
+    directories = [output_dir, ants_o_dir, nifti_o_dir]
+    for directory in directories:
+        files = glob.glob(directory + "*")
+        for f in files:
+            os.remove(f)
