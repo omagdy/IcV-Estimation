@@ -1,4 +1,5 @@
-from f_app import app
+import subprocess
+from f_app import app, celery
 from flask import request
 from icv import (
     convert_dicom_to_nifti,
@@ -30,7 +31,7 @@ def run_icv():
         return "Minio Server Parameters are missing."
 
     async_icv_job.delay(
-        minio_url, access_key, secret_key, pixel_spacing, slice_thickness
+        minio_url, minio_access_key, minio_secret_key, pixel_spacing, slice_thickness
     )
 
     return "Brain Segmentation Process has started."
