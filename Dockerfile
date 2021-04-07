@@ -28,7 +28,7 @@ RUN which antsBrainExtraction.sh
 
 WORKDIR /app/icv
 COPY . .
-RUN export PYTHONPATH="$PYTHONPATH:/app/icv"
+RUN export PYTHONPATH="$PYTHONPATH:/app/icv/app"
 
 RUN mkdir -p /app/output
 

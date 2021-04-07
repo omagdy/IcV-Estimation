@@ -1,6 +1,8 @@
 import subprocess
-from f_app import app, celery
-from flask import request
+from celery import Celery
+from flask import Flask, request
+from minio_client import minio_input_data_download, minio_results_upload
+from minio_client import minio_input_data_download, minio_results_upload
 from icv import (
     convert_dicom_to_nifti,
     extract_brain_segment,
@@ -9,8 +11,14 @@ from icv import (
     output_icv_estimation,
     clear_output_directories,
 )
-from minio_client import minio_input_data_download, minio_results_upload
 
+app = Flask(__name__)
+app.config["CELERY_BROKER_URL"] = "redis://localhost:6379/0"
+
+celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
+celery.conf.update(app.config)
+
+app.run(debug=True)
 
 @app.route("/run_icv", methods=["POST", "GET"])
 def run_icv():
