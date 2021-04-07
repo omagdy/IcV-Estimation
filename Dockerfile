@@ -34,5 +34,4 @@ RUN mkdir -p /app/output
 
 RUN apt-get install redis -y
 
-RUN nohup redis-server &
-RUN nohup celery -A f_app.celery worker --loglevel=info &
+RUN chmod +x run_flask_script.sh
