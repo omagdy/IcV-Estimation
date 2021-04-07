@@ -31,7 +31,3 @@ COPY . .
 RUN export PYTHONPATH="$PYTHONPATH:/app/icv/app"
 
 RUN mkdir -p /app/output
-
-RUN apt-get install redis -y
-
-RUN chmod +x run_flask_script.sh
