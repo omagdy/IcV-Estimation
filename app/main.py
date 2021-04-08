@@ -1,6 +1,6 @@
 import subprocess
 from arg_parser import input_parser
-from icv import (
+from icv_functions import (
     convert_dicom_to_nifti,
     extract_brain_segment,
     plot_mask_overlay,

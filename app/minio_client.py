@@ -1,5 +1,5 @@
 from minio import Minio
-from icv import (
+from icv_functions import (
     input_dir,
     output_dir,
 )

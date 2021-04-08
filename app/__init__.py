@@ -1,9 +1,9 @@
 import subprocess
+from celery import Celery
 from flask import Flask, request
-from multiprocessing import Process
 from minio_client import minio_input_data_download, minio_results_upload
 from minio_client import minio_input_data_download, minio_results_upload
-from icv import (
+from icv_functions import (
     convert_dicom_to_nifti,
     extract_brain_segment,
     plot_mask_overlay,
@@ -14,7 +14,11 @@ from icv import (
 
 app = Flask(__name__)
 
-app.run(debug=True)
+app.config["CELERY_BROKER_URL"] = "redis://localhost:6379/0"
+
+celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
+celery.conf.update(app.config)
+# app.run(debug=True)
 
 @app.route("/run_icv", methods=["POST", "GET"])
 def run_icv():
@@ -34,13 +38,13 @@ def run_icv():
     if not (minio_url and minio_access_key and minio_secret_key):
         return "Minio Server Parameters are missing."
 
-    p = Process(target=async_icv_job, args=(minio_url, minio_access_key, minio_secret_key, pixel_spacing, slice_thickness))
-    p.start()
-    p.join()
+    async_icv_job.delay(
+        minio_url, minio_access_key, minio_secret_key, pixel_spacing, slice_thickness
+    )
 
     return "Brain Segmentation Process has started."
 
-
+@celery.task
 def async_icv_job(minio_url, access_key, secret_key, pixel_spacing, slice_thickness):
 
     check = minio_input_data_download(minio_url, access_key, secret_key)

@@ -3,11 +3,15 @@ services:
   icv_app:
     image: omagdy/icv:dev
     tty: true
-    ports:
-      - "5000:5000"
     volumes:
       - input:/app/input
       - output:/app/output
+  icv_flask:
+    image: omagdy/icv:dev
+    tty: true
+    ports:
+      - "5000:5000"
+    command: bash -c "./run_flask_script.sh"
 volumes:
   input:
   output:

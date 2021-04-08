@@ -1,4 +1,5 @@
 
+
 # IcV-Estimation
 A program for estimating the intracranial volume of a patient from brain CT scans. The program uses a python script to integrate a [dicom to nii converter](https://github.com/rordenlab/dcm2niix)  with the [Ants](https://github.com/ANTsX/ANTs) tools-set for obtaining a brain mask using [OASIS](https://www.oasis-brains.org/) templates. 
 
@@ -9,7 +10,7 @@ Use the following command to create the container:
 
   ```
   docker-compose up -d icv_app
-   ```
+  ```
 
 2. ## Insert input data
 A folder containing CT scan files in the DICOM format should be inserted in the input volume which will be mounted by docker to the container from the following locations at the local driver :
@@ -38,3 +39,15 @@ The output result which is the following will be saved in the mounted output vol
  - A file with the IcV estimation
  - The brain mask file in NifTI format 
  - A PNG image of the overlay of the mask in three orthogonal sections 
+
+## OR
+
+Run a flask web based api of the program with the following command:
+  ```
+  docker-compose up -d icv_flask
+  ```
+And send to the api a GET or POST request with a minio server endpoint, access key, server key and optionally pixel spacing and slice thickness. 
+```
+  e.g: http://127.0.0.1:5000/run_icv?minio_url=172.17.0.1:9000&minio_access_key=minioadmin&minio_secret_key=minioadmin
+  ```
+The program will search there for a bucket with the name 'dicom-input-data' to obtain DICOM input data and after computing the output will upload the results back to another bucket in the server called 'output-data'.
