@@ -1,0 +1,35 @@
+name: CI Process Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: omagdy/icv:latest
+    steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v2
+        - name: Check Output Directory Before Process
+          run: ls /app/output
+        - name: Run Entire Process
+          run: python app/main.py --test True
+        - name: Check Output Directory After Process
+          run: ls /app/output
+        - name: Upload ICV File
+          uses: actions/upload-artifact@v2
+          with:
+            name: icv_estimation
+            path: /app/output/icv_estimation.txt
+        - name: Upload Mask Overlay
+          uses: actions/upload-artifact@v2
+          with:
+            name: mask_overlay
+            path: /app/output/mask_overlay.png
+        - name: Upload Brain Mask
+          uses: actions/upload-artifact@v2
+          with:
+            name: brain_mask
+            path: /app/output/outputBrainExtractionMask.nii.gz
+        - name: Upload Dice Score
+          uses: actions/upload-artifact@v2
+          with:
+            name: dice_score
+            path: /app/output/dice_score.txt

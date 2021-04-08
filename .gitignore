@@ -1,0 +1,8 @@
+.env
+.venv
+nohup.out
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.rdb

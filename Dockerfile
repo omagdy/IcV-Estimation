@@ -7,6 +7,7 @@ RUN apt-get update
 RUN apt-get install dcm2niix -y
 RUN mkdir -p /app/nifti_converted_output
 
+RUN mkdir -p /app/brain_extraction
 RUN apt-get install cmake -y
 WORKDIR /ants
 RUN git clone https://github.com/ANTsX/ANTs.git
@@ -25,5 +26,11 @@ ENV ANTSPATH="/opt/ANTs/bin/"
 ENV PATH="${ANTSPATH}:$PATH"
 RUN which antsBrainExtraction.sh
 
-WORKDIR /app/ivc
+WORKDIR /app/icv
 COPY . .
+RUN export PYTHONPATH="$PYTHONPATH:/app/icv/app"
+
+RUN apt-get install redis -y
+RUN chmod +x run_flask_script.sh
+
+RUN mkdir -p /app/output
