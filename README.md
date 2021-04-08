@@ -1,5 +1,4 @@
 
-
 # IcV-Estimation
 A program for estimating the intracranial volume of a patient from brain CT scans. The program uses a python script to integrate a [dicom to nii converter](https://github.com/rordenlab/dcm2niix)  with the [Ants](https://github.com/ANTsX/ANTs) tools-set for obtaining a brain mask using [OASIS](https://www.oasis-brains.org/) templates. 
 
@@ -46,7 +45,7 @@ Run a flask web based api of the program with the following command:
   ```
   docker-compose up -d icv_flask
   ```
-And send to the api a GET or POST request with a minio server endpoint, access key, server key and optionally pixel spacing and slice thickness. 
+And send to the api a GET or POST request with a minio server endpoint, access key, server key and optionally pixel spacing and slice thickness. A local minio sever will also be automatically created however the application can integrate with any minio server if it has its endpoint and authorization. The following is an example of a GET request to a local version of the application flask api:
 ```
   e.g: http://127.0.0.1:5000/run_icv?minio_url=172.17.0.1:9000&minio_access_key=minioadmin&minio_secret_key=minioadmin
   ```

@@ -1,17 +1,24 @@
 version: "3.9"
 services:
   icv_app:
-    image: omagdy/icv:dev
+    image: omagdy/icv:latest
     tty: true
     volumes:
       - input:/app/input
       - output:/app/output
   icv_flask:
-    image: omagdy/icv:dev
+    image: omagdy/icv:latest
     tty: true
     ports:
       - "5000:5000"
-    command: bash -c "./run_flask_script.sh"
+    command: bash -c "./run_flask_script.sh && ping localhost"
+    depends_on:
+      - minio_server
+  minio_server:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    command: server /data
 volumes:
   input:
   output:

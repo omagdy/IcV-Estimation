@@ -3,7 +3,7 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: omagdy/icv:dev
+    container: omagdy/icv:latest
     steps:
         - name: Checkout Repo
           uses: actions/checkout@v2
